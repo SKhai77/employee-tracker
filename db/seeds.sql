@@ -19,9 +19,9 @@ VALUES ("Accountant Manager", 160000, 2), -- The depmart_id is '2' as the Accoun
 -- Inserts the employees' first name, last name, role id, and manager id into employee table
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES ("John", "Doe", 1, NULL), -- John Doe is assigned as 'Accountant Manager' which is under the 'role' table in the very first(1) line of the table(see above "role" table). That is why the "role_id" is '1'. "NULL" means he has no manager.
-       ("Mike", "Chan", 2, 1) -- Assigned as an 'Accountant' and the id is '2'. His manager is John Doe and the id is '1'.
-       ("Tom", "Allen", 3, NULL), -- Assigned as a Legal Team Lead
-       ("Kunal", "Singh", 4, 3), -- Assigned as a Lawyer
+       ("Mike", "Chan", 2, 1) -- Assigned as 'Accountant' and the id is '2'. His manager is John Doe and the id is '1'.
+       ("Tom", "Allen", 3, NULL), -- Assigned as Legal Team Lead
+       ("Kunal", "Singh", 4, 3), -- Assigned as Lawyer
        ("Malia", "Brown", 5, NULL), -- Assigned as Lead Engineer
        ("Ashley", "Rodriguez", 6, 5), -- Assigned as Software Engineer
        ("Sam", "Kash", 6, NULL), -- Assigned as Sales Lead

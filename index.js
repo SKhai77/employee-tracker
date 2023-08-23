@@ -4,7 +4,6 @@ const mysql = require('mysql2');
 // Import and require 'inquirer'
 const inquirer = require('inquirer');
 
-
 // Connect to database
 const db = mysql.createConnection(
   {
