@@ -25,6 +25,6 @@ VALUES ("John", "Doe", 1, NULL), -- John Doe is assigned as 'Accountant Manager'
        ("Kunal", "Singh", 4, 3), -- Assigned as Lawyer
        ("Malia", "Brown", 5, NULL), -- Assigned as Lead Engineer
        ("Ashley", "Rodriguez", 6, 5), -- Assigned as Software Engineer
-       ("Sam", "Kash", 6, NULL), -- Assigned as Sales Lead
-       ("Kevin", "Tupik", 7, 6); -- Assigned as Salesperson
+       ("Sam", "Kash", 7, NULL), -- Assigned as Sales Lead
+       ("Kevin", "Tupik", 8, 7); -- Assigned as Salesperson
 
