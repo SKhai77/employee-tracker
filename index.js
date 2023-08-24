@@ -2,7 +2,7 @@
 const inquirer = require('inquirer');
 const routes = require('./db/index')
 
-// TODO: Create an array of tasks for user input
+// Create an array of tasks for user input
 const taskList = [
   {
     type: 'list',
@@ -12,7 +12,7 @@ const taskList = [
   },
 ];
 
-// TODO: Create a function to initialize app
+// Create a function to initialize app
 function init() {
   inquirer
     .prompt(taskList)
@@ -48,13 +48,14 @@ function init() {
           break;
 
         default:
-          process.exit()
+          process.exit();
       }
     });
 }
 
 function viewAllEmployees() {
   // create a quiery to return the employee info: id, first_name, last_name, role title, department name, salary, manager full name
+  
 }
 
 // Function call to initialize app
