@@ -1,28 +1,13 @@
-// Import and require 'mysql2'
-const mysql = require('mysql2');
-
 // Import and require 'inquirer'
 const inquirer = require('inquirer');
+const routes = require('./db/index')
 
-// Connect to database
-const db = mysql.createConnection(
-  {
-    host: 'localhost',
-    // MySQL username,
-    user: 'root',
-    // Add MySQL password here
-    password: 'mypass',
-    database: 'employees_db'
-  },
-  console.log(`Connected to the employees_db database.`)
-);
-
-// TODO: Create an array of questions for user input
-const questions = [
+// TODO: Create an array of tasks for user input
+const taskList = [
   {
     type: 'list',
     message: 'What would you like to do?',
-    choices: ['View All Employees', 'Add Employee', 'Update Employee Role', 'View All Roles', 'Add Role', 'View All Departments', 'Add Department', 'quit'],
+    choices: ['View All Departments', 'Add Department', 'View All Roles', 'Add Role', 'View All Employees', 'Add Employee', 'Update Employee Role', 'Exit'],
     name: 'task',
   },
 ];
@@ -30,31 +15,45 @@ const questions = [
 // TODO: Create a function to initialize app
 function init() {
   inquirer
-    .prompt(questions)
+    .prompt(taskList)
     .then((answers) => {
       switch (answers.task) {
-        case 'View All Employees':
-          viewEmployees()
-          break;
-        case 'Add Employee':
-          break;
-        case 'Update Employee Role':
-          break;
-        case 'View All Roles':
-          break;
-        case 'Add Role':
-          break;
+        
         case 'View All Departments':
+          routes.viewAllDepartments();
           break;
+          
         case 'Add Department':
+          routes.addDepartment();
           break;
+          
+        case 'View All Roles':
+          routes.viewAllRoles();
+          break;
+          
+        case 'Add Role':
+          routes.addRole();
+          break;
+
+        case 'View All Employees':
+          routes.viewAllEmployees();
+          break;
+
+        case 'Add Employee':
+          routes.addEmployee();
+          break;
+
+        case 'Update Employee Role':
+          routes.updateEmployeeRole();
+          break;
+
         default:
           process.exit()
       }
     });
 }
 
-function viewEmployees() {
+function viewAllEmployees() {
   // create a quiery to return the employee info: id, first_name, last_name, role title, department name, salary, manager full name
 }
 
