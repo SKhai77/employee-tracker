@@ -1,3 +1,4 @@
+-- Reference source to the "schema.sql" file for this construction.
 -- Inserts the names of different departments into department table
 INSERT INTO department (name)
 VALUES ("Engineering"), -- Every tables has their own individual id starting from number 1 and the number will Increase Automatically since it is made to do AUTO_INCREMENT in the Schema.sql file.
@@ -19,7 +20,7 @@ VALUES ("Accountant Manager", 160000, 2), -- The depmart_id is '2' as the Accoun
 -- Inserts the employees' first name, last name, role id, and manager id into employee table
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES ("John", "Doe", 1, NULL), -- John Doe is assigned as 'Accountant Manager' which is under the 'role' table in the very first(1) line of the table(see above "role" table). That is why the "role_id" is '1'. "NULL" means he has no manager.
-       ("Mike", "Chan", 2, 1) -- Assigned as 'Accountant' and the id is '2'. His manager is John Doe and the id is '1'.
+       ("Mike", "Chan", 2, 1), -- Assigned as 'Accountant' and the id is '2'. His manager is John Doe and the id is '1'.
        ("Tom", "Allen", 3, NULL), -- Assigned as Legal Team Lead
        ("Kunal", "Singh", 4, 3), -- Assigned as Lawyer
        ("Malia", "Brown", 5, NULL), -- Assigned as Lead Engineer
