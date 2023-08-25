@@ -127,36 +127,37 @@ function viewAllEmployees() {
 };
 
 function addEmployee() {
-inquirer
-.prompt([
-  {
-    type: 'input',
-    name: 'first_name',
-    message: 'Enter first name:',
-  },
-  {
-    type: 'input',
-    name: 'last_name',
-    message: 'Enter last name:',
-  },
-  {
-    type: 'input',
-    name: 'role_id',
-    message: 'Enter the name of the role:',
-  },
-  {
-    type: 'input',
-    name: 'department_id',
-    message: 'Enter the name of the department:',
-  },
-]);
-
-  db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)`, (error, response) => {
-    console.table(response)
-    if (error) throw error;
-    console.log('Employee added successfully.');
-    // Function call to initialize app
-    init();
+  inquirer
+  .prompt([
+    {
+      type: 'input',
+      name: 'first_name',
+      message: 'Enter first name:',
+    },
+    {
+      type: 'input',
+      name: 'last_name',
+      message: 'Enter last name:',
+    },
+    {
+      type: 'input',
+      name: 'role_id',
+      message: 'Enter the name of the role:',
+    },
+    {
+      type: 'input',
+      name: 'department_id',
+      message: 'Enter the name of the department:',
+    },
+  ])
+  .then((answers) => {
+    db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?)`, answers, (error, response) => {
+      console.table(response)
+      if (error) throw error;
+      console.log('Employee added successfully.');
+      // Function call to initialize app
+      init();
+    })
   })
 };
 
