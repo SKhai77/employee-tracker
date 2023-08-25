@@ -1,6 +1,7 @@
 // Import and require 'inquirer'
 const inquirer = require('inquirer');
-const routes = require('./db/index')
+// const routes = require('./db/index');
+const db = require('./db/connection');
 
 // Create an array of tasks for user input
 const taskList = [
@@ -18,33 +19,33 @@ function init() {
     .prompt(taskList)
     .then((answers) => {
       switch (answers.task) {
-        
+
         case 'View All Departments':
-          routes.viewAllDepartments();
+          viewAllDepartments();
           break;
-          
+
         case 'Add Department':
-          routes.addDepartment();
+          addDepartment();
           break;
-          
+
         case 'View All Roles':
-          routes.viewAllRoles();
+          viewAllRoles();
           break;
-          
+
         case 'Add Role':
-          routes.addRole();
+          addRole();
           break;
 
         case 'View All Employees':
-          routes.viewAllEmployees();
+          viewAllEmployees();
           break;
 
         case 'Add Employee':
-          routes.addEmployee();
+          addEmployee();
           break;
 
         case 'Update Employee Role':
-          routes.updateEmployeeRole();
+          updateEmployeeRole();
           break;
 
         default:
@@ -53,11 +54,84 @@ function init() {
     });
 }
 
+function viewAllDepartments() {
+  db.query('SELECT * FROM department', (error, response) => {
+    console.table(response)
+    // Function call to initialize app
+    init();
+  })
+};
+
+function addDepartment() {
+
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        name: 'departmentName',
+        message: 'Enter the name of the department:',
+      },
+    ])
+
+  db.query('INSERT INTO department (name) VALUES (?)', (error, response) => {
+    console.table(response)
+    // Function call to initialize app
+    init();
+
+  })
+};
+
+function viewAllRoles() {
+  db.query('SELECT * FROM role', (error, response) => {
+    console.table(response)
+    // Function call to initialize app
+    init();
+  })
+};
+
+function addRole() {
+
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        name: 'roleName',
+        message: 'Enter the name of the role:',
+      },
+    ])
+
+  db.query('INSERT INTO role', (error, response) => {
+    console.table(response)
+    // Function call to initialize app
+    init();
+  })
+};
+
 function viewAllEmployees() {
-  // create a quiery to return the employee info: id, first_name, last_name, role title, department name, salary, manager full name
-  
-}
+  db.query('SELECT * FROM employee', (error, response) => {
+    console.table(response)
+    // Function call to initialize app
+    init();
+  })
+};
+
+function addEmployee() {
+  db.query('SELECT * FROM department', (error, response) => {
+    console.table(response)
+    // Function call to initialize app
+    init()
+  })
+};
+
+function updateEmployeeRole() {
+  db.query('SELECT * FROM department', (error, response) => {
+    console.table(response)
+    // Function call to initialize app
+    init()
+  })
+};
 
 // Function call to initialize app
 init();
+
 
