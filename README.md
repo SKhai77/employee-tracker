@@ -51,7 +51,7 @@ To use the application,
 node index.js    in the command line
 ```
 - Then, take action based on the Prompts option
-- Watch the walkthrough video for complete information. [Click here](https://drive.google.com/file/d/1J-T2NkDosyp_er4E1a0bktX6SzDJJ58a/view)
+- Watch the walkthrough video. [Click here](https://drive.google.com/file/d/1J-T2NkDosyp_er4E1a0bktX6SzDJJ58a/view)
 
 
 Preview the screenshot:
