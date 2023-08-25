@@ -140,18 +140,20 @@ function addEmployee() {
       message: 'Enter last name:',
     },
     {
-      type: 'input',
+      type: 'list',
       name: 'role_id',
-      message: 'Enter the name of the role:',
+      message: 'Select the role:',
+      choices: ['1: Accountant Manager', '2: Accountant', '3: Legal Team Lead', '4: Lawyer', '5: Lead Engineer', '6: Software Engineer', '7: Sales Lead', '8: Salesperson'],
     },
     {
-      type: 'input',
-      name: 'department_id',
-      message: 'Enter the name of the department:',
+      type: 'list',
+      name: 'manager_id',
+      message: 'Select the department:',
+      choices: ['1: Engineering', '2: Finance', '3: Legal', 'Sales'],
     },
   ])
   .then((answers) => {
-    db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?)`, answers, (error, response) => {
+    db.query(`INSERT INTO employee set ?`, {first_name: answers.first_name, last_name: answers.last_name, role_id: parseInt(answers.role_id), manager_id: parseInt(answers.manager_id)}, (error, response) => {
       console.table(response)
       if (error) throw error;
       console.log('Employee added successfully.');
