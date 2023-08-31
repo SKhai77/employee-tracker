@@ -412,6 +412,55 @@ async function updateEmployeeRole() {
 }
 
 
+// Function to update an employee's manager using user input and the 'db' connection
+async function updateEmployeeManager() {
+  try {
+    const employees = await db.promise().query('SELECT * FROM employee');
+    const managers = await db.promise().query('SELECT * FROM employee WHERE manager_id IS NULL');
+
+    const employeeChoices = employees[0].map(employee => ({
+      name: `${employee.first_name} ${employee.last_name}`,
+      value: employee.id,
+    }));
+
+    // Create an array of manager choices, including a "None" option
+    const managerChoices = [
+      ...managers[0].map(manager => ({
+        name: `${manager.first_name} ${manager.last_name}`,
+        value: manager.id,
+      })),
+      {
+        name: 'None',
+        value: null,
+      },
+    ];
+
+    const answers = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'employeeId',
+        message: "Which employee's manager do you want to update? ('View All Employees' first to see existing employees.)",
+        choices: employeeChoices,
+      },
+      {
+        type: 'list',
+        name: 'newManager',
+        message: "Who is the employee's new manager?",
+        choices: managerChoices,
+      },
+    ]);
+
+    await db.promise().query('UPDATE employee SET manager_id = ? WHERE id = ?', [answers.newManager, answers.employeeId]);
+    console.log("Employee's manager updated successfully.");
+    viewAllEmployees();
+  } catch (error) {
+    console.error("Error updating employee's manager.", error);
+    init();
+  }
+}
+
+
+
 
 // Function call to initialize app
 init();
