@@ -235,6 +235,34 @@ async function addRole() {
 }
 
 
+// Function to delete a role using the 'db' connection
+async function deleteRole() {
+  try {
+    const roles = await db.promise().query('SELECT * FROM role');
+    const roleChoices = roles[0].map(role => ({
+      name: role.title,
+      value: role.id,
+    }));
+
+    const answers = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'roleId',
+        message: 'Which role do you want to delete?',
+        choices: roleChoices,
+      },
+    ]);
+    // This line is added to delete the role
+    await db.promise().query('DELETE FROM role WHERE id = ?', [answers.roleId]);
+
+    console.log('Role deleted successfully.');
+    viewAllRoles();
+  } catch (error) {
+    console.error('Error deleting role.', error);
+    init();
+  }
+}
+
 
 
 // Function call to initialize app
