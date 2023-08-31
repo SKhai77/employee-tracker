@@ -460,6 +460,25 @@ async function updateEmployeeManager() {
 }
 
 
+// Display employees by department using the 'db' connection
+async function viewEmployeeByDepartment() {
+  try {
+    const [rows, fields] = await db.promise().query(`
+      SELECT d.name AS department, e.first_name, e.last_name, r.title AS role 
+      FROM employee e 
+      JOIN role r ON e.role_id = r.id 
+      JOIN department d ON r.department_id = d.id`);
+
+    console.log('Displaying employees by department successfully.');
+    console.table(rows);
+    init();
+  } catch (error) {
+    console.error('Error viewing employees by department.', error);
+    init();
+  }
+}
+
+
 
 
 // Function call to initialize app
