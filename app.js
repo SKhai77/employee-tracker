@@ -284,6 +284,63 @@ async function viewAllEmployees() {
 }
 
 
+// Function to add a new employee using user input and the 'db' connection
+async function addEmployee() {
+  try {
+    const roles = await db.promise().query('SELECT * FROM role');
+    const managers = await db.promise().query('SELECT * FROM employee WHERE manager_id IS NULL');
+
+    const roleChoices = roles[0].map(role => ({
+      name: role.title,
+      value: role.id,
+    }));
+
+    // Create an array of manager choices, including a "None" option
+    const managerChoices = [
+      ...managers[0].map(manager => ({
+        name: `${manager.first_name} ${manager.last_name}`,
+        value: manager.id,
+      })),
+      {
+        name: 'None',
+        value: null,
+      },
+    ];
+
+    const answers = await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'firstName',
+        message: "What is the employee's first name?",
+      },
+      {
+        type: 'input',
+        name: 'lastName',
+        message: "What is the employee's last name?",
+      },
+      {
+        type: 'list',
+        name: 'employeeRole',
+        message: "What is the employee's role?",
+        choices: roleChoices,
+      },
+      {
+        type: 'list',
+        name: 'employeeManager',
+        message: "Who is the employee's manager?",
+        choices: managerChoices,
+      },
+    ]);
+
+    const result = await db.promise().query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)', [answers.firstName, answers.lastName, answers.employeeRole, answers.employeeManager]);
+    console.log('Employee added successfully.');
+    viewAllEmployees();
+  } catch (error) {
+    console.error('Error adding employee.', error);
+    init();
+  }
+}
+
 
 
 // Function call to initialize app
