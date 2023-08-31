@@ -479,7 +479,24 @@ async function viewEmployeeByDepartment() {
 }
 
 
+// Display employee by manager using the 'db' connection
+async function viewEmployeeByManager() {
+  try {
+    const [rows, fields] = await db.promise().query(`
+      SELECT CONCAT(m.first_name, " ", m.last_name) AS manager_name, e.first_name, e.last_name, r.title AS role 
+      FROM employee e 
+      LEFT JOIN employee m ON e.manager_id = m.id 
+      JOIN role r ON e.role_id = r.id`
+    );
 
+    console.log('Displaying employees by manager successfully.');
+    console.table(rows);
+    init();
+  } catch (error) {
+    console.error('Error viewing employees by manager.', error);
+    init();
+  }
+}
 
 // Function call to initialize app
 init();
