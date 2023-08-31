@@ -13,7 +13,7 @@ const db = mysql.createConnection({
 db.promise()
   .connect()
   .then(() => {
-    console.log(`Connected to the employees_db database.\n Welcome to Employee Tracking System!`);
+    console.log(`\n Connected to the "employees_db" database.\n Welcome to Employee Tracking System!`);
   })
   .catch((error) => {
     console.error('Error connecting to the database:', error);
