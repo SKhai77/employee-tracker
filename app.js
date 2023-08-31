@@ -90,3 +90,49 @@ async function viewAllDepartments() {
 }
 
 
+// Add a new department using user input and the 'db' connection
+async function addDepartment() {
+  try {
+    const answers = await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'departmentName',
+        message: 'What is the name of the department?',
+        validate: function (input) {
+          if (input.trim() === '') {
+            return "Department name cannot be empty.";
+          }
+          return true;
+        },
+      },
+    ]);
+
+    // Insert the department into the database
+    await db.promise().query('INSERT INTO department (name) VALUES (?)', [answers.departmentName]);
+    console.log('Department added successfully.');
+
+    // Fetch all departments again after insertion
+    const [departments] = await db.promise().query('SELECT * FROM department');
+
+    // Generate the list of department choices using .map
+    const departmentChoices = departments.map(department => department.name);
+
+    // Update the task list to include the new department in choices
+    taskList.forEach(task => {
+      if (['Add Role', 'Delete Department', 'Add Employee', "Update Employee's Manager", 'View Employee By Department'].includes(task.name)) {
+        task.choices = departmentChoices;
+      }
+    });
+
+    console.table(departments);
+    init();
+  } catch (error) {
+    console.error('Error adding department.', error);
+    init();
+  }
+}
+
+
+
+// Function call to initialize app
+init();
