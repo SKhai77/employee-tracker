@@ -48,11 +48,14 @@ To use the application,
 - Click the "Toggle Panel" on the right-side or "Ctrl+J" to see the Terminal or Command Line Interface(CLI)
 - Type:
 ```md
-node index.js    in the command line
+npm start or node app.js    in the command line
 ```
 - Then, take action based on the Prompts option
-- Watch the walkthrough video. [Click here](https://drive.google.com/file/d/1J-T2NkDosyp_er4E1a0bktX6SzDJJ58a/view)
+- Watch the walkthrough video. [Click here](https://drive.google.com/file/d/1ccQUpSUB7mIgQUvrM_7_txxJu9rIuw23/view)
 
+Tips: How to Force Exit out of the app?
+- Firstly, click on the Command Line
+- Then, Press Ctrl + C (Windows) and Command + C (Mac)
 
 Preview the screenshot:
 ![Employee Tracker Screenshot](./screenshot/employee-tracker.png)
