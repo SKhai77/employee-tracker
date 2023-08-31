@@ -181,6 +181,61 @@ async function viewAllRoles() {
 }
 
 
+// Function to add a new role using user input and the 'db' connection
+async function addRole() {
+  try {
+    const departments = await db.promise().query('SELECT * FROM department');
+
+    const departmentChoices = departments[0].map(department => ({
+      name: department.name,
+      value: department.id,
+    }));
+
+    const answers = await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'roleName',
+        message: 'What is the name of the role?',
+        validate: function (input) {
+          if (input.trim() === '') {
+            return 'Role name cannot be empty.';
+          }
+          return true;
+        },
+      },
+      {
+        type: 'input',
+        name: 'salary',
+        message: 'What is the salary of the role?',
+        validate: function (input) {
+          const parsedSalary = parseFloat(input);
+          if (isNaN(parsedSalary) || parsedSalary <= 0) {
+            return 'Invalid salary. Please enter a valid positive number.';
+          }
+          return true;
+        },
+      },
+      {
+        type: 'list',
+        name: 'addRoleDepartment',
+        message: 'Which department does the role belong to?',
+        choices: departmentChoices,
+      },
+    ]);
+
+    await db.promise().query('INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)', [answers.roleName, answers.salary, answers.addRoleDepartment]);
+    console.log('Role added successfully.');
+
+    // Display all roles after adding the new role
+    viewAllRoles();
+  } catch (error) {
+    console.error('Error adding role.', error);
+    init();
+  }
+}
+
+
+
 
 // Function call to initialize app
 init();
