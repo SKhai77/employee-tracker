@@ -371,6 +371,46 @@ async function deleteEmployee() {
 }
 
 
+// Function to update an employee's role using user input and the 'db' connection
+async function updateEmployeeRole() {
+  try {
+    const employees = await db.promise().query('SELECT * FROM employee');
+    const roles = await db.promise().query('SELECT * FROM role');
+
+    const employeeChoices = employees[0].map(employee => ({
+      name: `${employee.first_name} ${employee.last_name}`,
+      value: employee.id,
+    }));
+
+    const roleChoices = roles[0].map(role => ({
+      name: role.title,
+      value: role.id,
+    }));
+
+    const answers = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'employeeId',
+        message: "Which employee's role do you want to update? ('View All Employees' first to see existing employees.)",
+        choices: employeeChoices,
+      },
+      {
+        type: 'list',
+        name: 'newRole',
+        message: "What is the employee's new role?",
+        choices: roleChoices,
+      },
+    ]);
+
+    await db.promise().query('UPDATE employee SET role_id = ? WHERE id = ?', [answers.newRole, answers.employeeId]);
+    console.log("Employee's role updated successfully.");
+    viewAllEmployees();
+  } catch (error) {
+    console.error("Error updating employee's role.", error);
+    init();
+  }
+}
+
 
 
 // Function call to initialize app
