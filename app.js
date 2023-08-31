@@ -133,6 +133,34 @@ async function addDepartment() {
 }
 
 
+// Function to delete a department using the 'db' connection
+async function deleteDepartment() {
+  try {
+    const departments = await db.promise().query('SELECT * FROM department');
+    const departmentChoices = departments[0].map(department => ({
+      name: department.name,
+      value: department.id,
+    }));
+
+    const answers = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'departmentId',
+        message: 'Which department do you want to delete?',
+        choices: departmentChoices,
+      },
+    ]);
+
+    await db.promise().query('DELETE FROM department WHERE id = ?', [answers.departmentId]);
+    console.log('Department deleted successfully.');
+    viewAllDepartments();
+  } catch (error) {
+    console.error('Error deleting department.', error);
+    init();
+  }
+}
+
+
 
 // Function call to initialize app
 init();
