@@ -342,6 +342,36 @@ async function addEmployee() {
 }
 
 
+// Function to delete an employee using the 'db' connection
+async function deleteEmployee() {
+  try {
+    const employees = await db.promise().query('SELECT * FROM employee');
+
+    const employeeChoices = employees[0].map(employee => ({
+      name: `${employee.first_name} ${employee.last_name}`,
+      value: employee.id,
+    }));
+
+    const answers = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'employeeId',
+        message: 'Which employee do you want to delete?',
+        choices: employeeChoices,
+      },
+    ]);
+
+    await db.promise().query('DELETE FROM employee WHERE id = ?', [answers.employeeId]);
+    console.log('Employee deleted successfully.');
+    viewAllEmployees();
+  } catch (error) {
+    console.error('Error deleting employee.', error);
+    init();
+  }
+}
+
+
+
 
 // Function call to initialize app
 init();
