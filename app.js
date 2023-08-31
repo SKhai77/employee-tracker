@@ -264,6 +264,27 @@ async function deleteRole() {
 }
 
 
+// Display all employees using the 'db' connection
+async function viewAllEmployees() {
+  try {
+    const [rows, fields] = await db.promise().query(`
+      SELECT e.id, e.first_name, e.last_name, r.title AS role, d.name AS department, r.salary, CONCAT(m.first_name, " ", m.last_name) AS manager 
+      FROM employee e 
+      LEFT JOIN role r ON e.role_id = r.id 
+      LEFT JOIN department d ON r.department_id = d.id 
+      LEFT JOIN employee m ON e.manager_id = m.id`);
+
+    console.log('Displaying all employees successfully.');
+    console.table(rows);
+    init();
+  } catch (error) {
+    console.error('Error viewing all employees.', error);
+    init();
+  }
+}
+
+
+
 
 // Function call to initialize app
 init();
