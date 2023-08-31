@@ -268,7 +268,7 @@ async function deleteRole() {
 async function viewAllEmployees() {
   try {
     const [rows, fields] = await db.promise().query(`
-      SELECT e.id, e.first_name, e.last_name, r.title AS role, d.name AS department, r.salary, CONCAT(m.first_name, " ", m.last_name) AS manager 
+      SELECT e.id, e.first_name, e.last_name, r.title AS title, d.name AS department, r.salary, CONCAT(m.first_name, " ", m.last_name) AS manager 
       FROM employee e 
       LEFT JOIN role r ON e.role_id = r.id 
       LEFT JOIN department d ON r.department_id = d.id 
@@ -464,7 +464,7 @@ async function updateEmployeeManager() {
 async function viewEmployeeByDepartment() {
   try {
     const [rows, fields] = await db.promise().query(`
-      SELECT d.name AS department, e.first_name, e.last_name, r.title AS role 
+      SELECT d.name AS department, e.first_name, e.last_name, r.title AS title 
       FROM employee e 
       JOIN role r ON e.role_id = r.id 
       JOIN department d ON r.department_id = d.id`);
@@ -483,7 +483,7 @@ async function viewEmployeeByDepartment() {
 async function viewEmployeeByManager() {
   try {
     const [rows, fields] = await db.promise().query(`
-      SELECT CONCAT(m.first_name, " ", m.last_name) AS manager_name, e.first_name, e.last_name, r.title AS role 
+      SELECT CONCAT(m.first_name, " ", m.last_name) AS manager_name, e.first_name, e.last_name, r.title AS title 
       FROM employee e 
       LEFT JOIN employee m ON e.manager_id = m.id 
       JOIN role r ON e.role_id = r.id`
