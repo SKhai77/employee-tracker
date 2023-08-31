@@ -161,6 +161,26 @@ async function deleteDepartment() {
 }
 
 
+// Display all roles using the 'db' connection
+async function viewAllRoles() {
+  try {
+
+    // Query the database to retrieve all roles
+    const [rows, fields] = await db.promise().query('SELECT * FROM role');
+    console.log('Displaying all roles successfully.');
+    console.table(rows);
+
+    // Continue with the main menu after displaying roles
+    init();
+  } catch (error) {
+    console.error('Error viewing all roles.', error);
+
+    // Show the main menu again
+    init();
+  }
+}
+
+
 
 // Function call to initialize app
 init();
